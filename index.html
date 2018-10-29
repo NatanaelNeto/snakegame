@@ -24,20 +24,71 @@
     font-weight: 100;
     text-align: left;
     margin-top: 0;
+    margin-bottom: 0;
   }
   canvas {
     border: 1px solid white;
   }
   </style>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.15/howler.core.min.js"></script>
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '{582247868889367}',
+      cookie     : true,
+      xfbml      : true,
+      version    : '{3.2}'
+    });
+      
+    FB.AppEvents.logPageView();   
+      
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+  FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+  });
+
+
+  {
+      status: 'connected',
+      authResponse: {
+          accessToken: '...',
+          expiresIn:'...',
+          signedRequest:'...',
+          userID:'...'
+      }
+  }
+
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+</script>
 </head>
 <body>
 
 <div>
   <h1>Snake Game</h1>
+  
+<fb:login-button 
+  scope="public_profile,email"
+  onlogin="checkLoginState();">
+</fb:login-button>
   <canvas width="400" height="400" id="game"></canvas>
   <h2 id="pontos">Pontos: 0</h2>
   <h2 id="maximum">Máximo: 0</h2>
+  <h2 id="maxScore">Recorde: 0</h2>
   <audio id="catch">
     <source src="catch.mp3" type="audio/mpeg">
     Seu navegador não possui suporte ao elemento audio
@@ -134,6 +185,7 @@ function loop() {
         lose.play();
         document.getElementById("pontos").innerHTML = "Pontos: " + pts;
         document.getElementById("maximum").innerHTML = "Máximo: " + maximum;
+        document.getElementById("maxScore").innerHTML = "Recorde: " + str;
       }
     }
   });
