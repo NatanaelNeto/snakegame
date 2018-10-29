@@ -77,14 +77,23 @@
 </script>
 </head>
 <body>
+  <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v3.2&appId=582247868889367&autoLogAppEvents=1';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 <div>
   <h1>Snake Game</h1>
-  
+
 <fb:login-button 
   scope="public_profile,email"
   onlogin="checkLoginState();">
 </fb:login-button>
+<div class="fb-login-button"></div>
   <canvas width="400" height="400" id="game"></canvas>
   <h2 id="pontos">Pontos: 0</h2>
   <h2 id="maximum">Máximo: 0</h2>
